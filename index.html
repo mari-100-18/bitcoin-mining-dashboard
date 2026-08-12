@@ -19,5 +19,14 @@
 <script src="data.js"></script>
 <script src="live.js"></script>
 <script src="app.js"></script>
+<script>
+// Silent pageview counter for the hidden /stats.html page. Fire-and-forget,
+// never blocks or affects rendering if the counter service is unreachable.
+(function () {
+  try {
+    fetch('https://api.countapi.xyz/hit/btc-mining-dash-mari18b-9f3k2/views', { keepalive: true }).catch(function () {});
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>

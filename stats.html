@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Site Stats</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  #app-shell { display: block; padding: 24px 20px 40px; }
+  .stats-title { font-size: 20px; margin: 0 0 4px; }
+  .stats-sub { color: var(--text-dim); font-size: 13px; margin: 0 0 28px; }
+  .stats-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 24px; text-align: center; margin-bottom: 16px;
+  }
+  .stats-count { font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 48px; color: var(--accent); line-height: 1; }
+  .stats-label { color: var(--text-faint); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 8px; }
+  .stats-status { color: var(--text-faintest); font-size: 12px; text-align: center; margin-top: 12px; }
+  .stats-refresh {
+    display: block; margin: 20px auto 0; background: var(--card); color: var(--text);
+    border: 1px solid var(--border); border-radius: 10px; padding: 10px 18px; font-size: 13px; cursor: pointer;
+  }
+  .stats-refresh:hover { border-color: var(--accent); color: var(--accent); }
+</style>
+</head>
+<body>
+<div id="app-shell">
+  <h1 class="heading stats-title">Site views</h1>
+  <p class="stats-sub">Not linked anywhere on the dashboard — bookmark this URL.</p>
+  <div class="stats-card">
+    <div class="stats-count" id="count">—</div>
+    <div class="stats-label">total page views</div>
+  </div>
+  <div class="stats-status" id="status">Loading…</div>
+  <button class="stats-refresh" id="refresh">Refresh</button>
+</div>
+
+<script>
+(function () {
+  var COUNTER_URL = 'https://api.countapi.xyz/get/btc-mining-dash-mari18b-9f3k2/views';
+  var countEl = document.getElementById('count');
+  var statusEl = document.getElementById('status');
+
+  function load() {
+    statusEl.textContent = 'Loading…';
+    fetch(COUNTER_URL)
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        var value = data && data.value;
+        if (typeof value !== 'number') throw new Error('bad payload');
+        countEl.textContent = value.toLocaleString('en-US');
+        statusEl.textContent = 'As of ' + new Date().toLocaleString('en-US');
+      })
+      .catch(function () {
+        statusEl.textContent = 'Could not load the count right now — try again in a moment.';
+      });
+  }
+
+  document.getElementById('refresh').addEventListener('click', load);
+  load();
+})();
+</script>
+</body>
+</html>
