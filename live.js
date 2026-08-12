@@ -96,14 +96,28 @@ function computeBlocksMined24h(stats) {
   return Math.round(86400 / stats.avgBlockTimeSec);
 }
 
-// mempool.space's per-pool endpoint shape has some variance across
-// versions, so this parses defensively and throws (falling back to the
-// cached list) rather than risk showing garbage.
-async function fetchOceanBlocks() {
-  const data = await fetchJson('https://mempool.space/api/v1/mining/pool/ocean');
-  const rawBlocks = Array.isArray(data) ? data : data && (data.blocks || data.recentBlocks || data.recent);
-  if (!Array.isArray(rawBlocks) || rawBlocks.length === 0) throw new Error('no blocks in payload');
+// mempool.space's blocks-by-pool endpoint is /api/v1/mining/pool/:slug/blocks
+// (the plain /pool/:slug endpoint returns profile/stats, not blocks). The
+// exact pool slug for Ocean is unverified, so try the likely candidates in
+// order and use whichever responds with a real blocks array.
+const OCEAN_POOL_SLUG_CANDIDATES = ['ocean', 'oceanxyz'];
 
+async function fetchOceanBlocks() {
+  let lastErr = null;
+  for (const slug of OCEAN_POOL_SLUG_CANDIDATES) {
+    try {
+      const data = await fetchJson(`https://mempool.space/api/v1/mining/pool/${slug}/blocks`);
+      const rawBlocks = Array.isArray(data) ? data : data && (data.blocks || data.recentBlocks || data.recent);
+      if (!Array.isArray(rawBlocks) || rawBlocks.length === 0) throw new Error('no blocks in payload');
+      return parseOceanBlocks(rawBlocks);
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  throw lastErr || new Error('no blocks in payload');
+}
+
+function parseOceanBlocks(rawBlocks) {
   const blocks = rawBlocks.slice(0, 8).map((b) => {
     const height = b.height ?? b.blockHeight ?? b.h;
     const ts = b.timestamp ?? b.time ?? b.blockTimestamp ?? b.mediantime;
