@@ -33,15 +33,15 @@ const FALLBACK_OCEAN_BLOCKS = [
   { height: 959600, dateLabel: 'Jul 27, 2026 · 5:30 AM UTC', fee: 0.074 },
 ];
 
-const EQUITY_SNAPSHOT_DATE = 'Aug 11, 2026';
+const EQUITY_SNAPSHOT_DATE = 'Aug 14, 2026';
 
 const EQUITY_PRICES = [
-  { ticker: 'MARA', price: 9.68, pct: 1.26 },
-  { ticker: 'RIOT', price: 20.24, pct: 4.33 },
-  { ticker: 'CLSK', price: 11.52, pct: -0.60 },
-  { ticker: 'CORZ', price: 19.76, pct: 1.65 },
-  { ticker: 'HUT', price: 88.78, pct: 3.64 },
-  { ticker: 'WULF', price: 17.60, pct: 3.52 },
+  { ticker: 'MARA', price: 9.20, pct: -4.96 },
+  { ticker: 'RIOT', price: 19.02, pct: -6.03 },
+  { ticker: 'CLSK', price: 12.09, pct: 4.95 },
+  { ticker: 'CORZ', price: 20.18, pct: 2.13 },
+  { ticker: 'HUT', price: 85.44, pct: -3.76 },
+  { ticker: 'WULF', price: 17.38, pct: -1.25 },
 ];
 
 const NEWS_ITEMS = [
