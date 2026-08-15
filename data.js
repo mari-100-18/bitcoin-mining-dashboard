@@ -57,6 +57,17 @@ const NEWS_ITEMS = [
 
 const LETTER_ISSUES = [
   {
+    dateLabel: 'Aug 15, 2026',
+    subject: "Ocean's block drought this week put miner nerves to the test",
+    paragraphs: [
+      "Ocean went through a rough stretch this week, with at least one gap between blocks pushing past the 10-hour mark. That's a noticeably slower pace than the pool's typical rhythm, and it's the kind of stretch that gets noticed fast by anyone watching the blocks-found log refresh and refresh with nothing new showing up.",
+      "The math behind it isn't mysterious. Ocean's share of total network hashrate is still small next to giants like Foundry and AntPool, and block arrival for any single pool is a Poisson process, not a schedule. The expected time between blocks scales with hash share, so a smaller pool going many hours, or even the better part of a day, without landing one is normal variance working exactly as the math says it will. Nothing has to be broken for that to happen.",
+      "Knowing the math doesn't make it feel any less stressful if you're pointed at Ocean and covering a power bill with what it pays out. A 10+ hour dry spell can start to feel like something's wrong with your rig even when it isn't, and that uncertainty is a real cost, not just a statistical footnote. It's the tradeoff that comes with choosing a smaller, self-built-block pool over a giant that smooths payouts across a much bigger share of the network.",
+      "That tradeoff is still worth it, in my view. Every block Ocean finds, drought or no drought, is one more block templated by the miner instead of handed down by the pool. A slow week doesn't change what that's building toward. The drought ends. It always does.",
+      'Talk next week.',
+    ],
+  },
+  {
     dateLabel: 'Aug 8, 2026',
     subject: 'Difficulty keeps grinding higher, Ocean keeps stacking blocks, and ETF flows go quiet',
     paragraphs: [
